@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/users/register',[App\Http\Controllers\API\RegisterController::class, 'register'])->name('user.register');
 Route::post('/users/login',[App\Http\Controllers\API\LoginController::class, 'login'])->name('user.login');
+Route::post('/users/register/email',[App\Http\Controllers\API\RegisterController::class, 'checkIfEmailExist'])->name('user.email');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users',function (Request $request) {

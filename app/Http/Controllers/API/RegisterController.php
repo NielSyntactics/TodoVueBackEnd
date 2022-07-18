@@ -26,4 +26,23 @@ class RegisterController extends Controller
             'token_type'   => 'Bearer',
         ]);
     }
+
+    public function checkIfEmailExist(Request $request){
+        $request->validate([
+            'email'=>'required|email'
+        ]);
+
+        $email = User::where('email','=',$request->email)->get();
+        if(count($email) > 0) {
+            return response()->json([
+                'Message' => 'Email Already Taken',
+                'isNotUnique' => true,
+            ]);
+        }
+
+        return response()->json([
+            'Message' => 'Email Is Unique',
+            'isNotUnique' => false,
+        ]);
+    }
 }
