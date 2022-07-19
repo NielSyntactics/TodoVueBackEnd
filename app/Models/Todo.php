@@ -15,6 +15,7 @@ class Todo extends Model
         'name',
         'date',
         'status',
-        'reminder'
+        'reminder',
+        'user_id'
     ];
 }

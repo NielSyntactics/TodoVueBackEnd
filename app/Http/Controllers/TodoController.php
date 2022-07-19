@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TodoAddFormRequest;
 
 class TodoController extends Controller
@@ -15,7 +16,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        return Todo::where('status','=',true)->get();
+        return Todo::where('status','=',true)->where('user_id','=',auth()->user()->id)->get();
     }
 
     /**
@@ -36,7 +37,13 @@ class TodoController extends Controller
      */
     public function store(TodoAddFormRequest $request)
     {
-        $todo = Todo::create($request->validated());
+
+        $todo = Todo::create([
+            'name'=>$request->name,
+            'date'=>$request->date,
+            'reminder'=>$request->reminder,
+            'user_id'=>auth()->user()->id
+        ]);
         return response()->json(['message' => 'Todo Has been saved', 'data' => $todo]);
     }
 
